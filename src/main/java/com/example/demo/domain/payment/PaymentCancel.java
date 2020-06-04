@@ -29,6 +29,6 @@ public class PaymentCancel extends CommonEntity{
 	@Column(length=10, nullable=false)
 	private Long cancelAmount;
 	
-	@Column(length=10)
+	@Column(length=10, nullable=false)
 	private Long vat;
 }
