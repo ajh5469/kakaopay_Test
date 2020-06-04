@@ -30,7 +30,7 @@ public class PaymentService {
 	private DataTransferRepository dataTransferRepository;
 	
 	/**
-     * ½Å±Ô°Å·¡ µî·Ï
+     * ì‹ ê·œê±°ë˜ ë“±ë¡
      * @param paymentDto
      */
 	@Transactional
@@ -81,14 +81,14 @@ public class PaymentService {
 		data += String.format("%-47s", "");
 				
 		dataForTransfer.setTransferData(data);
-		dataForTransfer.setSuccessYn("Y");  //ÇöÀç´Â ¸ğµÎ Àü¼Û¿¡ ¼º°øÇÑ °ÍÀ¸·Î °¡Á¤
+		dataForTransfer.setSuccessYn("Y");  //í˜„ì¬ëŠ” ëª¨ë‘ ì „ì†¡ì— ì„±ê³µí•œ ê²ƒìœ¼ë¡œ ê°€ì •
 		dataTransferRepository.save(dataForTransfer);
 		
 		return outputMap;
 	};
 	
 	/**
-     * °Å·¡ Á¶È¸
+     * ê±°ë˜ ì¡°íšŒ
      * @param paymentDto
      */
 	public Map<String, Object> getPaymentData(PaymentDto paymentDto){	
@@ -103,7 +103,14 @@ public class PaymentService {
 		try{
 			String decryptedInfo = CryptoUtil.decrypt(payment.get().getEncryptedCardInfo());
 			String[] dataArr = decryptedInfo.split("\\|");
-			cardInfo.put("CREDIT_CARD_NUMBER", dataArr[0]);
+			
+			char[] charList = dataArr[0].toCharArray();
+			for(int i =6; i<dataArr[0].length()-3; i++){
+		          charList[i]='*';
+		        }
+			String maskedCardNum = new String(charList);
+			
+			cardInfo.put("CREDIT_CARD_NUMBER", maskedCardNum);
 			cardInfo.put("Valid_YM", dataArr[1]);
 			cardInfo.put("CVC", dataArr[2]);
 
@@ -141,7 +148,7 @@ public class PaymentService {
 	}
 	
 	/**
-     * °áÁ¦ Ãë¼Ò(ÀüÃ¼/ºÎºĞ)
+     * ê²°ì œ ì·¨ì†Œ(ì „ì²´/ë¶€ë¶„)
      * @param paymentDto
      */
 	public Map<String, Object> putPaymentData(PaymentDto paymentDto){
@@ -161,7 +168,7 @@ public class PaymentService {
 		String data = "_446CANCEL";
 		
 		
-		//ÀÌ¹Ì ÀüÃ¼Ãë¼ÒµÈ °ÇÀÎÁö ¿ì¼± È®ÀÎ
+		//ì´ë¯¸ ì „ì²´ì·¨ì†Œëœ ê±´ì¸ì§€ ìš°ì„  í™•ì¸
 		if(totalAmt.longValue() == 0L) {
 			throw new commonException(HttpStatus.BAD_REQUEST, "Canceled Already");
 		}
@@ -220,7 +227,7 @@ public class PaymentService {
 		data += String.format("%-47s", "");
 				
 		dataForTransfer.setTransferData(data);
-		dataForTransfer.setSuccessYn("Y");  //ÇöÀç´Â ¸ğµÎ Àü¼Û¿¡ ¼º°øÇÑ °ÍÀ¸·Î °¡Á¤
+		dataForTransfer.setSuccessYn("Y");  //í˜„ì¬ëŠ” ëª¨ë‘ ì „ì†¡ì— ì„±ê³µí•œ ê²ƒìœ¼ë¡œ ê°€ì •
 		dataTransferRepository.save(dataForTransfer);
 		
 		
