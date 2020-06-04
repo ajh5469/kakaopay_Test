@@ -36,8 +36,11 @@
 * JAVA8 및 GIT, Gradle 사전 설치 필요.
 
 git clone https://github.com/ajh5469/kakaopay_Test.git
+
 cd kakaopay_Test
+
 gradle build
+
 java -jar build\libs\kakaopayTest-0.0.1-SNAPSHOT.jar
 
 ====================================================
