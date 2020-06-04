@@ -42,7 +42,7 @@ java -jar build\libs\kakaopayTest-0.0.1-SNAPSHOT.jar
 
 ====================================================
 
-##엔티티설계
+<엔티티설계>
 
  1. Payment – 결제기록의 마스터 테이블. 최초 결제 인입시 Insert. 이후 취소결제 인입시 Update.
  2. Payment_Cancel – 취소결제 인입시 Insert.
@@ -50,7 +50,7 @@ java -jar build\libs\kakaopayTest-0.0.1-SNAPSHOT.jar
 
 ====================================================
 
-##문제해결 전략
+<문제해결 전략>
 
 1. 결제API 구축
 * 호출방식: POST
